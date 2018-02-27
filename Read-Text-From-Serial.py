@@ -37,7 +37,7 @@ have any problems with it.
 #################################################################
 '''
 
-port = "/dev/ttyAMC0"  # Serial port for computer this program runs on (this one is what the port was on my Raspberry Pi)
+port = "/dev/ttyACM0"  # Serial port for computer this program runs on (this one is what the port was on my Raspberry Pi)
 try:
 	serial_connection = serial.Serial(port, baudrate=19200, timeout=1) # Establishing a serial connection at 19200 baudrate
 	print "Connected!"                                                 # Confirmation
