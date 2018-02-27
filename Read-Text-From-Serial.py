@@ -23,7 +23,7 @@ A couple of important things to note:
 
 	4: The output filename, port, resulting text, and markers will
 			all probably be different between my machines and yours.
-		The filename is something easily fixable, it does not
+		The filename is something easily fixable; it does not
 			matter what it is, so make it whatever you want.
 		I've already discussed what to do with the port.
 		The markers and serial data are sent by my arduino, so
