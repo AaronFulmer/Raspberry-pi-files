@@ -99,9 +99,10 @@ void printValues() {
 
 }
 /*
-    This is where the magic happens. First, the Arduino requests and displays the data from the TSL2561(Lux) Sensor.
-    Next, it requests and displays the data from the BME280(Environment) Sensor.
-    Then, it waits for 5 minutes and does it again.
+    This is where the magic happens. 
+    First, the Arduino requests and sends the data from the TSL2561(Lux) Sensor to the serial port.
+    Next, it requests and sends the data from the BME280(Environment) Sensor to the serial port.
+    Then, it waits for 5 minutes and does it again. This is a completely arbitrary timeline that is likely to change.
 */
 void loop() {
   
