@@ -11,6 +11,28 @@
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
+/*-------------------------------------------------------------------
+Wiring Guide to work with the following program:
+1: Using a breadboard or some other means, connect the 5V power from the
+   Arduino to the Vin pin on both sensors.
+2: Using a breadboard or some other means, connect a ground (GND) pin
+   from the Arduino to the GND pins on the sensors.
+3: On the TSL2561
+        A: Connect the SDA pin from the sensor to the I2C SDA pin on
+           the Arduino
+        B: Connect the SCL pin from the sensor to the I2C SCL pin on
+           the Arduino
+4: On the BME280
+        A: Connect the SCK pin from the sensor to digital pin 13 on
+           the Arduino
+        B: Connect the SDO pin from the sensor to digital pin 12 on
+           the Arduino
+        C: Connect the SDI pin from the sensor to digital pin 11 on
+           the Arduino
+        D: Connect the CS  pin from the sensor to digital pin 10 on
+           the Arduino
+*/-------------------------------------------------------------------
+  
 Adafruit_BME280 bme(BME_CS, BME_MOSI, BME_MISO, BME_SCK);                            // creating an object for the BME280 sensor with software SPI
 
 Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 12345);  // creating an object for the TSL2561 sensor with id of 12345
