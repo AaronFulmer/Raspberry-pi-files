@@ -4,6 +4,7 @@
 #include <Adafruit_BME280.h>
 #include <Adafruit_TSL2561_U.h>
 
+// These are the wires used by the sensor
 #define BME_SCK 13
 #define BME_MISO 12
 #define BME_MOSI 11
@@ -31,13 +32,12 @@ Wiring Guide to work with the following program:
            the Arduino
         D: Connect the CS  pin from the sensor to digital pin 10 on
            the Arduino
-*/-------------------------------------------------------------------
-  
+-------------------------------------------------------------------*/
+
+
 Adafruit_BME280 bme(BME_CS, BME_MOSI, BME_MISO, BME_SCK);                            // creating an object for the BME280 sensor with software SPI
 
 Adafruit_TSL2561_Unified tsl = Adafruit_TSL2561_Unified(TSL2561_ADDR_FLOAT, 12345);  // creating an object for the TSL2561 sensor with id of 12345
-
-unsigned long delayTime;
 
 /*
   This Method is used to configure the TSL2561 Sensor.
@@ -75,9 +75,6 @@ void setup() {
     }
     
     Serial.println("BME280 Successfully Configured");
-    delayTime = 300000;
-
-    Serial.println();
     
     // ----------------------------------------------------------
     // Setting up the TSL2561 Sensor
@@ -86,13 +83,14 @@ void setup() {
     if(!tsl.begin())
   {
     /* There was a problem detecting the TSL2561 ... check your connections */
-    Serial.print("Ooops, no TSL2561 detected ... Check your wiring or I2C ADDR!");
+    Serial.print("Oops, no TSL2561 detected ... Check your wiring or I2C ADDR!");
     while(1);
   }
 
    configureSensor();
    Serial.println("TSL2561 Successfully Configured");
    
+   Serial.println();
 }
 
 /*
@@ -122,27 +120,43 @@ void printValues() {
 }
 /*
     This is where the magic happens. 
+    Every second, the arduino checks if there is something to read from the serial port.
+    If there is something to read, it reads it. If the string it reads is "read sensors" (ignoring letter case) then it will poll the sensors.
     First, the Arduino requests and sends the data from the TSL2561(Lux) Sensor to the serial port.
     Next, it requests and sends the data from the BME280(Environment) Sensor to the serial port.
     Then, it waits for 5 minutes and does it again. This is a completely arbitrary timeline that is likely to change.
 */
 void loop() {
   
-  /* Get a new sensor event */ 
-  sensors_event_t event;
-  tsl.getEvent(&event);
+  if(Serial.available()){
+      String command = Serial.readString();
+      if (command.equalsIgnoreCase("read sensors")){
+           
+           // ---------------------------------------
+           // Polling the TSL2561(Lux) Sensor
+           // ---------------------------------------
+           
+           /* Get a new sensor event */ 
+           sensors_event_t event;
+           tsl.getEvent(&event);
  
-  /* Display the results (light is measured in lux) */
-  if (event.light)
-  {
-    Serial.print(event.light); Serial.println(" lux");
-  }
-  else
-  {
-    /* If event.light = 0 lux the sensor is probably saturated
-       and no reliable data could be generated! */
-    Serial.println("Sensor overload");
-  }
-  printValues();
-  delay(delayTime);
+           /* Display the results (light is measured in lux) */
+           if (event.light)
+           {
+              Serial.print(event.light); Serial.println(" lux");
+           }
+           else
+           {
+              /* If event.light = 0 lux the sensor is probably saturated
+              and no reliable data could be generated! */
+              Serial.println("Sensor overload");
+           }
+           
+           // ----------------------------------------
+           // Polling the BME280(Environmental) Sensor
+           // ----------------------------------------
+           printValues();
+        }
+    }
+    delay(1000);
 }
