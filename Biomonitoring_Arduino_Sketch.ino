@@ -121,7 +121,7 @@ void printValues() {
 /*
     This is where the magic happens. 
     Every second, the arduino checks if there is something to read from the serial port.
-    If there is something to read, it reads it. If the string it reads is "read sensors" (ignoring letter case) then it will poll the sensors.
+    If there is something to read, it reads it. If the string it reads is 'r' (for "Read Sensors") then it will poll the sensors.
     First, the Arduino requests and sends the data from the TSL2561(Lux) Sensor to the serial port.
     Next, it requests and sends the data from the BME280(Environment) Sensor to the serial port.
 */
