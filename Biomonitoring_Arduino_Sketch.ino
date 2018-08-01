@@ -124,13 +124,10 @@ void printValues() {
     If there is something to read, it reads it. If the string it reads is "read sensors" (ignoring letter case) then it will poll the sensors.
     First, the Arduino requests and sends the data from the TSL2561(Lux) Sensor to the serial port.
     Next, it requests and sends the data from the BME280(Environment) Sensor to the serial port.
-    Then, it waits for 5 minutes and does it again. This is a completely arbitrary timeline that is likely to change.
 */
 void loop() {
-  
-  if(Serial.available()){
-      String command = Serial.readString();
-      if (command.equalsIgnoreCase("read sensors")){
+      char command = Serial.read();
+      if (command == 'r'){
            
            // ---------------------------------------
            // Polling the TSL2561(Lux) Sensor
@@ -157,6 +154,6 @@ void loop() {
            // ----------------------------------------
            printValues();
         }
-    }
+    
     delay(1000);
 }
