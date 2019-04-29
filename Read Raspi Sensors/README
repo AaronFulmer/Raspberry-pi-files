@@ -1,0 +1,6 @@
+Connect TSL2561 to Raspberry Pi:
+https://www.instructables.com/id/Lux-Sensor-TSL2561-Raspberry-Pi/
+
+Connect BME280 to Raspberry Pi:
+https://learn.adafruit.com/adafruit-bme280-humidity-barometric-pressure-temperature-sensor-breakout/python-circuitpython-test
+Use SPI because the I2C is in use by the TSL2561 Sensor
